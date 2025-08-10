@@ -10,18 +10,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import java.time.Duration;
 
 public class TestWebDriver {
 
         WebDriver driver;
         private  static final Logger logger = LogManager.getLogger(TestWebDriver.class);
+        String trainingUrl = "https://otus.home.kartushin.su/training.html";
 
         @BeforeEach
         public void setup() {
             logger.info("Установка ChromeWebDriver");
             WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
         }
 
         @AfterEach
@@ -37,10 +36,10 @@ public class TestWebDriver {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("headless");
             driver = new ChromeDriver(options);
-            driver.get("https://otus.home.kartushin.su/training.html");//режим headless
+            driver.get(trainingUrl);//режим headless
 
             var boxText = driver.findElement(By.id("textInput"));
-            Thread.sleep(Duration.ofSeconds(5));
+
             boxText.sendKeys("ОТУС");
 
             String testText = boxText.getAttribute("value");
@@ -50,9 +49,10 @@ public class TestWebDriver {
 
         @Test
         public void openModalWooden(){
+            driver = new ChromeDriver();
             logger.info("Открытие веббраузера в режиме киоска");
             driver.manage().window().fullscreen();
-            driver.get("https://otus.home.kartushin.su/training.html");//режим киоска
+            driver.get(trainingUrl);//режим киоска
             var buttonClick = driver.findElement(By.id("openModalBtn"));
             buttonClick.click();
             var modalWindow = driver.findElement(By.id("myModal")).getText();
@@ -62,9 +62,10 @@ public class TestWebDriver {
 
         @Test
         public void sendNameEmail() throws InterruptedException {
+            driver = new ChromeDriver();
             logger.info("Открытие веббраузера в полноэкранном режиме");
             driver.manage().window().maximize();
-            driver.get("https://otus.home.kartushin.su/training.html");//полноэкранный режим
+            driver.get(trainingUrl);//полноэкранный режим
             var name = driver.findElement(By.id("name"));
             name.sendKeys("фыв");
             var email = driver.findElement(By.id("email"));
