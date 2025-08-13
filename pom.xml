@@ -84,7 +84,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <base.url>https://otus.home.kartushin.su/training.html</base.url>
+                    <systemPropertyVariables>
+                        <base.url>https://otus.home.kartushin.su/</base.url>
+                    </systemPropertyVariables>
+
                 </configuration>
             </plugin>
         </plugins>

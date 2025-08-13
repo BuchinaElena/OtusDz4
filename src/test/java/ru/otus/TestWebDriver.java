@@ -1,6 +1,6 @@
 package ru.otus;
-import io.github.bonigarcia.wdm.WebDriverManager;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
@@ -12,10 +12,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class TestWebDriver {
-
         WebDriver driver;
+        String trainingUrl = System.getProperty("base.url");
         private  static final Logger logger = LogManager.getLogger(TestWebDriver.class);
-        String trainingUrl = "https://otus.home.kartushin.su/training.html";
 
         @BeforeEach
         public void setup() {
@@ -31,20 +30,16 @@ public class TestWebDriver {
         }
 
         @Test
-        public void checkBoxText() throws InterruptedException {
+        public void checkBoxText() {
             logger.info("Открытие веббраузера в режиме headless");
             ChromeOptions options = new ChromeOptions();
             options.addArguments("headless");
             driver = new ChromeDriver(options);
             driver.get(trainingUrl);//режим headless
-
             var boxText = driver.findElement(By.id("textInput"));
-
             boxText.sendKeys("ОТУС");
-
             String testText = boxText.getAttribute("value");
             System.out.println(testText + " - это введенный текст на пред. шагах");
-
         }
 
         @Test
@@ -56,12 +51,11 @@ public class TestWebDriver {
             var buttonClick = driver.findElement(By.id("openModalBtn"));
             buttonClick.click();
             var modalWindow = driver.findElement(By.id("myModal")).getText();
-
             System.out.println(modalWindow + " - модальное окно открылось.");
         }
 
         @Test
-        public void sendNameEmail() throws InterruptedException {
+        public void sendNameEmail() {
             driver = new ChromeDriver();
             logger.info("Открытие веббраузера в полноэкранном режиме");
             driver.manage().window().maximize();
@@ -74,7 +68,5 @@ public class TestWebDriver {
             buttonSend.click();
             var message = driver.findElement(By.id("messageBox")).getText();
             System.out.println(message + " - Текст с формы.");
-
         }
-
 }
